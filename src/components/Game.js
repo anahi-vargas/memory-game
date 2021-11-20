@@ -164,11 +164,25 @@ function Game() {
 
     return(
         <div>
-            {overlayId !== null && <Overlay id={overlayId} onClick={() => { setOverlayId(null); startGame()}}/>}
-            <GameInfo highScore={highScore} score={score} time={time} flips={flips} restart={() => {setReset(true); startGame()}} setSettings={() => setSettings(!settingsOpen)}/>
+            {overlayId !== null 
+            && <Overlay
+                id={overlayId}
+                onClick={() => { setOverlayId(null); startGame()}}/>}
+            <GameInfo
+                highScore={highScore}
+                score={score}
+                time={time}
+                flips={flips}
+                restart={() => {setReset(true); startGame()}}
+                setSettings={() => setSettings(!settingsOpen)}/>
             <Cards cards={cards} flipCard={flipCard} />
-            {settingsOpen && <Settings setSettings={() => setSettings(s => !s)} difficulty={difficulty} 
-            setDifficulty={(difficulty) => setDifficulty(difficulty)} applyChanges={() => {applyChanges(true); startGame()}}/>}
+            {settingsOpen
+            && <Settings
+                setSettings={() => setSettings(s => !s)}
+                difficulty={difficulty}
+                // setDifficulty={(difficulty) => setDifficulty(difficulty)}
+                applyChanges={(newDifficulty) => {setDifficulty(newDifficulty); applyChanges(true); startGame()}}
+            />}
         </div>)
     }
 
