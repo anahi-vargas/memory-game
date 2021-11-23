@@ -20,8 +20,6 @@ function Game() {
     const [overlayId, setOverlayId] = useState(0)
     const [settingsOpen, setSettings] = useState(false)
     const [cards, setCards] = useState([])
-    // const [applied, applyChanges] = useState(true)
-    // const [reset, setReset] = useState(false)
 
     const shuffle = (cards) => {
         let temp;
@@ -85,59 +83,64 @@ function Game() {
         setTime(selectedSettings.time);
     }
 
-    useEffect( () => {
-        const timer = () => setTime(time - 1);
-        if (!start || settingsOpen) { return }
-
-        if (time <= 0) {
-            setOverlayId(1)
-            return;
-        }
-
-        const id = setInterval(timer, 1000);
-        return () => clearInterval(id);
-        }, [time, start, settingsOpen] // if value changes rerender
-    );
-
-    const checkMatch = () => {
-        // if the ids dont match flip cards over
-        if (cards[firstCard].id !== cards[secondCard].id) {
-            setTimeout( () => {
-                updateCards(firstCard)
-                updateCards(secondCard)
-            }, 700)  
-        }
-        else {
-            sounds[3].play()
-            matchedCards.push(cards[firstCard].id)
-            setScore(s => s + 50)
-            if(matchedCards.length === cards.length/2) {
-                setOverlayId(2)
-            } 
-        }
-
-        // reset the cards
-        setTimeout( () => {
-            setFirstCard(null)
-            setSecondCard(null)
-        }, 700)
+    const handleGameReport = (currentOverlayId) => {
+        sounds[currentOverlayId].play();
+        calculateFinalScore();
+        setOverlayId(currentOverlayId);
+        setStart(false);
     }
 
-    useEffect(() => { 
+    // this is for the timer thingy
+    useEffect( () => {
+        const timer = () => setTime(time => time - 1);
+        let id = null;
+
+        if (!start || settingsOpen) { 
+            clearInterval(id);
+        } else {
+            id = setInterval(timer, 1000);
+        }
+
+        return () => clearInterval(id);
+        }, [start, settingsOpen] // if value changes rerender
+    );
+    
+    // check if the selected cards match. flips them if they dont
+    useEffect(() => {
+        const checkMatch = () => {
+            // if the ids dont match flip cards over
+            if (cards[firstCard].id !== cards[secondCard].id) {
+                setTimeout( () => {
+                    updateCards(firstCard)
+                    updateCards(secondCard)
+                }, 700)  
+            }
+            else {
+                sounds[3].play()
+                matchedCards.push(cards[firstCard].id)
+                setScore(s => s + 50)
+                if(matchedCards.length === cards.length/2) {
+                    handleGameReport(2);
+                } 
+            }
+    
+            // reset the cards
+            setTimeout( () => {
+                setFirstCard(null)
+                setSecondCard(null)
+            }, 700)
+        }
+
         if(secondCard !== null){
             checkMatch()
         }
     }, [secondCard])
 
-
-    useMemo(() => {
-        if (overlayId !== null && overlayId !== 0) {
-            setStart(false)
-            sounds[overlayId].play()
-            calculateFinalScore()
-        }
-        return overlayId
-    }, [overlayId])
+    // out of time!
+    if (start && time <= 0) {
+        handleGameReport(1);
+        return;
+    }
 
     return(
         <div>
