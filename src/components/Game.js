@@ -1,4 +1,4 @@
-import {useState, useEffect, useMemo} from "react" // 
+import {useState, useEffect} from "react" // 
 import {images, sounds} from "../assets"
 import {GameInfo, Cards, Overlay, Settings} from "./"
 
