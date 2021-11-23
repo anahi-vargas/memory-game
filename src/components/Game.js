@@ -19,8 +19,9 @@ function Game() {
     const [highScore, setHighScore] = useState(getHighScore)
     const [overlayId, setOverlayId] = useState(0)
     const [settingsOpen, setSettings] = useState(false)
-    const [applied, applyChanges] = useState(true)
-    const [reset, setReset] = useState(false)
+    const [cards, setCards] = useState([])
+    // const [applied, applyChanges] = useState(true)
+    // const [reset, setReset] = useState(false)
 
     const shuffle = (cards) => {
         let temp;
@@ -69,12 +70,19 @@ function Game() {
     }
 
     // reset everything
-     const startGame = () => { 
+     const startGame = (currentDifficulty = difficulty) => {
+        const settingsArr = [{ cards: 20, time: 75,}, { cards: 30, time: 100,}, { cards: 40, time: 180,}];
+        const selectedSettings = settingsArr[currentDifficulty];
+
         cards.map(card => card.flipped = false)
         setMatched([]);
         setFlips(0);
         setScore(0);
-        setStart(true); 
+        setStart(true);
+        setDifficulty(currentDifficulty); 
+        setHighScore(localStorage.getItem(savedScores[currentDifficulty]))
+        setCards(shuffle(images.slice(0, selectedSettings.cards)));
+        setTime(selectedSettings.time);
     }
 
     useEffect( () => {
@@ -131,20 +139,6 @@ function Game() {
         return overlayId
     }, [overlayId])
 
-    const [cards, setCards] = useState([])
-
-    useMemo(() => {    
-        if(applied || reset || start) {   
-            const settingsArr = [{ cards: 20, time: 75,}, { cards: 30, time: 100,}, { cards: 40, time: 180,}];
-            const selectedSettings = settingsArr[difficulty];
-            setHighScore(localStorage.getItem(savedScores[difficulty]))
-            setCards(shuffle(images.slice(0, selectedSettings.cards)));
-            setTime(selectedSettings.time);
-            applyChanges(false);
-            setReset(false);
-        }
-    }, [difficulty, applied, reset, start])
-
     return(
         <div>
             {overlayId !== null 
@@ -156,15 +150,14 @@ function Game() {
                 score={score}
                 time={time}
                 flips={flips}
-                restart={() => {setReset(true); startGame()}}
+                restart={() => {startGame()}}
                 setSettings={() => setSettings(!settingsOpen)}/>
             <Cards cards={cards} flipCard={flipCard} />
             {settingsOpen
             && <Settings
                 setSettings={() => setSettings(s => !s)}
                 difficulty={difficulty}
-                // setDifficulty={(difficulty) => setDifficulty(difficulty)}
-                applyChanges={(newDifficulty) => {setDifficulty(newDifficulty); applyChanges(true); startGame()}}
+                applyChanges={(newDifficulty) => { startGame(newDifficulty) }}
             />}
         </div>)
     }
