@@ -135,30 +135,13 @@ function Game() {
 
     useMemo(() => {    
         if(applied || reset || start) {   
-            applyChanges(false)
-            setReset(false)
-            switch(difficulty) {
-            case 0: 
-                setHighScore(localStorage.getItem(savedScores[difficulty]))
-                setCards(shuffle(images.slice(0, 20)))
-                setTime(75)
-                break;
-            case 1: 
-                setHighScore(localStorage.getItem(savedScores[difficulty]))
-                setCards(shuffle(images.slice(0, 30)))
-                setTime(100)
-                break;
-            case 2: 
-                setHighScore(localStorage.getItem(savedScores[difficulty]))
-                setCards(shuffle([...images]))
-                setTime(180)
-                break;
-            default:
-                setHighScore(localStorage.getItem(savedScores[difficulty]))
-                setCards(shuffle(images.slice(0, 20)))
-                setTime(75)
-                break;
-            }
+            const settingsArr = [{ cards: 20, time: 75,}, { cards: 30, time: 100,}, { cards: 40, time: 180,}];
+            const selectedSettings = settingsArr[difficulty];
+            setHighScore(localStorage.getItem(savedScores[difficulty]))
+            setCards(shuffle(images.slice(0, selectedSettings.cards)));
+            setTime(selectedSettings.time);
+            applyChanges(false);
+            setReset(false);
         }
     }, [difficulty, applied, reset, start])
 
