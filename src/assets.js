@@ -9,3 +9,4 @@ export const images = imageFileNames.flatMap((image, index) => ([
 ]))
 
 export const sounds = soundFileNames.map(sound => new Audio(require(`./assets/audio/${sound}.wav`).default))
+export const toggleSounds = () => sounds.forEach(sound => sound.muted = !sound.muted)
