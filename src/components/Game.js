@@ -2,7 +2,6 @@ import {useState, useEffect} from "react"
 import {images, sounds} from "../assets"
 import {GameInfo, Cards, Overlay, Settings} from "./"
 
-
 function Game() {
     const [start, setStart] = useState(false)
     const [firstCard, setFirstCard] = useState(null)
@@ -90,6 +89,7 @@ function Game() {
 
     // this is for the timer thingy
     useEffect( () => {
+        console.log(overlayId)
         const timer = () => setTime(time => time - 1);
         let id = null;
 
@@ -102,37 +102,6 @@ function Game() {
         return () => clearInterval(id);
         }, [start, settingsOpen] // if value changes rerender
     );
-    
-    // check if the selected cards match. flips them if they dont
-    // useEffect(() => {
-    //     const checkMatch = () => {
-    //         // if the ids do not match, flip both cards over
-    //         if (cards[firstCard].id !== cards[secondCard].id) {
-    //             setTimeout( () => {
-    //                 updateCards(firstCard)
-    //                 updateCards(secondCard)
-    //             }, 700)  
-    //         }
-    //         else {
-    //             sounds[3].play()
-    //             matchedCards.push(cards[firstCard].id)
-    //             setScore(prevScore => prevScore + 50)
-    //             if(matchedCards.length === cards.length/2) {
-    //                 handleGameReport(2);
-    //             } 
-    //         }
-    
-    //         // reset the cards
-    //         setTimeout( () => {
-    //             setFirstCard(null)
-    //             setSecondCard(null)
-    //         }, 700)
-    //     }
-
-    //     if(secondCard !== null){
-    //         checkMatch()
-    //     }
-    // }, [secondCard])
 
     const checkMatch = (secondCardIndex) => {
         // if the ids do not match, flip both cards over
@@ -170,13 +139,13 @@ function Game() {
             && <Overlay
                 id={overlayId}
                 onClick={() => { setOverlayId(null); startGame()}}/>}
-            <GameInfo
+            {(overlayId === null || overlayId > 0) && <GameInfo
                 highScore={highScore}
                 score={score}
                 time={time}
                 flips={flips}
                 restart={() => {startGame()}}
-                setSettings={() => setSettings(!settingsOpen)}/>
+                setSettings={() => setSettings(!settingsOpen)}/>}
             <Cards cards={cards} flipCard={flipCard} />
             {settingsOpen
             && <Settings

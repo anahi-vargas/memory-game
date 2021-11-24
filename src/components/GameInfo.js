@@ -9,8 +9,8 @@ function GameInfo (props){
                     <div className="game-info">Score {props.score}</div>
                 </div>
                 <div className="game-info">
-                    <MdRefresh  onClick={props.restart}/>
-                    <MdSettings onClick={props.setSettings}/>
+                    <MdRefresh  className="icon" onClick={props.restart}/>
+                    <MdSettings className="icon" onClick={props.setSettings}/>
                 </div>
             </div>
             <div className="game-info-row2 game-title">Mix & Match Burgers</div>
