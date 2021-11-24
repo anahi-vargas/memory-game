@@ -11,7 +11,7 @@ function Settings (props) {
                         key={i}
                         className={`difficulty ${newDifficulty === i ? "selected" : ""}`}
                         onClick={() => setNewDifficulty(i)}>
-                            {name}
+                        {name}
                     </div>
                 )
             }

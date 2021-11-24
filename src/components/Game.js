@@ -1,4 +1,4 @@
-import {useState, useEffect} from "react" // 
+import {useState, useEffect} from "react"
 import {images, sounds} from "../assets"
 import {GameInfo, Cards, Overlay, Settings} from "./"
 
@@ -7,19 +7,16 @@ function Game() {
     const [start, setStart] = useState(false)
     const [firstCard, setFirstCard] = useState(null)
     const [secondCard, setSecondCard] = useState(null)
+    const [cards, setCards] = useState([])
     const [matchedCards, setMatched] = useState([])
+    const [settingsOpen, setSettings] = useState(false)
     const [difficulty, setDifficulty] = useState(0)
     const [flips, setFlips] = useState(0)
     const [time, setTime] = useState(0);
     const [score, setScore] = useState(0)
-    const savedScores = ['MemGame-Easy', 'MemGame-Medium', 'MemGame-Hard']
-
-    const getHighScore = () => localStorage.getItem(savedScores[difficulty])
-
-    const [highScore, setHighScore] = useState(getHighScore)
     const [overlayId, setOverlayId] = useState(0)
-    const [settingsOpen, setSettings] = useState(false)
-    const [cards, setCards] = useState([])
+    const savedScores = ['MemGame-Easy', 'MemGame-Medium', 'MemGame-Hard']
+    const [highScore, setHighScore] = useState(localStorage.getItem(savedScores[difficulty]))
 
     const shuffle = (cards) => {
         let temp;
@@ -41,6 +38,7 @@ function Game() {
             }
             if (firstCard !== null && secondCard === null) {
                 setSecondCard(index) 
+                checkMatch(index)
             }
             updateCards(index)
         }
@@ -106,35 +104,59 @@ function Game() {
     );
     
     // check if the selected cards match. flips them if they dont
-    useEffect(() => {
-        const checkMatch = () => {
-            // if the ids dont match flip cards over
-            if (cards[firstCard].id !== cards[secondCard].id) {
-                setTimeout( () => {
-                    updateCards(firstCard)
-                    updateCards(secondCard)
-                }, 700)  
-            }
-            else {
-                sounds[3].play()
-                matchedCards.push(cards[firstCard].id)
-                setScore(s => s + 50)
-                if(matchedCards.length === cards.length/2) {
-                    handleGameReport(2);
-                } 
-            }
+    // useEffect(() => {
+    //     const checkMatch = () => {
+    //         // if the ids do not match, flip both cards over
+    //         if (cards[firstCard].id !== cards[secondCard].id) {
+    //             setTimeout( () => {
+    //                 updateCards(firstCard)
+    //                 updateCards(secondCard)
+    //             }, 700)  
+    //         }
+    //         else {
+    //             sounds[3].play()
+    //             matchedCards.push(cards[firstCard].id)
+    //             setScore(prevScore => prevScore + 50)
+    //             if(matchedCards.length === cards.length/2) {
+    //                 handleGameReport(2);
+    //             } 
+    //         }
     
-            // reset the cards
+    //         // reset the cards
+    //         setTimeout( () => {
+    //             setFirstCard(null)
+    //             setSecondCard(null)
+    //         }, 700)
+    //     }
+
+    //     if(secondCard !== null){
+    //         checkMatch()
+    //     }
+    // }, [secondCard])
+
+    const checkMatch = (secondCardIndex) => {
+        // if the ids do not match, flip both cards over
+        if (cards[firstCard].id !== cards[secondCardIndex].id) {
             setTimeout( () => {
-                setFirstCard(null)
-                setSecondCard(null)
-            }, 700)
+                updateCards(firstCard)
+                updateCards(secondCardIndex)
+            }, 700)  
+        }
+        else {
+            sounds[3].play()
+            matchedCards.push(cards[firstCard].id)
+            setScore(prevScore => prevScore + 50)
+            if(matchedCards.length === cards.length/2) {
+                handleGameReport(2);
+            } 
         }
 
-        if(secondCard !== null){
-            checkMatch()
-        }
-    }, [secondCard])
+        // reset the cards
+        setTimeout( () => {
+            setFirstCard(null)
+            setSecondCard(null)
+        }, 700)
+    }
 
     // out of time!
     if (start && time <= 0) {
@@ -158,7 +180,7 @@ function Game() {
             <Cards cards={cards} flipCard={flipCard} />
             {settingsOpen
             && <Settings
-                setSettings={() => setSettings(s => !s)}
+                setSettings={() => setSettings(!settingsOpen)}
                 difficulty={difficulty}
                 applyChanges={(newDifficulty) => { startGame(newDifficulty) }}
             />}

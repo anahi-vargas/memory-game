@@ -58,32 +58,28 @@ body {
   text-shadow: -0.06em 0em 0em var(--clr-accent);
   font-family: var(--ff-primary);
   font-weight: var(--fw-reg);
-  font-size: 1.5em;
+  font-size: 1.25em;
 }
 
 .game-info {
   color: var(--clr-secondary);
   text-shadow: -0.06em 0.2em 0.2em var(--clr-accent);
   font-family: var(--ff-secondary);
-  font-size: 1em;
+  font-size: 0.75em;
 }
 
 .cards {
   margin-top: 2vh;
-  height: 100vh;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(65px, auto));
-  grid-template-rows: repeat(auto-fit, minmax(85px, auto));
-  justify-items: center;
-  align-items: center;
+  grid-template-columns: repeat(5, 14vw);
+  grid-gap: 1vw;
   justify-content: center;
-  align-content: start;
 }
 
 .card {
   position: relative;
-  height: 80px;
-  width: 60px;
+  height: 10vh;
+  width: 14vw;
 }
 
 .card-back {
@@ -96,7 +92,10 @@ body {
 }
 
 .card-face > img {
-  height: 35px;
+  height: 5vh;
+}
+.card-back > img {
+  height: 4vh;
 }
 
 .card-face {
@@ -126,14 +125,6 @@ body {
   transform: rotateY(180deg);
 }
 
-/* .card-front:hover .card-value {
-  transform: scale(1);
-}
-
-.card-back:hover .burger {
-  transform: translateY(0);
-} */
-
 .card-value {
   transform: scale(0.9);
   transition: transform 100ms ease-in-out;
@@ -153,33 +144,27 @@ body {
 
 .burger {
   align-self: center;
-  transform: translateY(-10px);
-  transition: transform 100ms ease-in-out;
 }
 
 .overlay-text {
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
   z-index: 100;
-  display: none;
-  position: fixed;
+  display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   transition: background-color 500ms, font-size 500ms;
+  animation: overlay-grow 500ms forwards;
   color: var(--clr-secondary);
   font-family: var(--ff-secondary);
 }
 
 .overlay-text:hover {
   cursor: pointer;
-}
-
-.overlay-text {
-  display: flex;
-  animation: overlay-grow 500ms forwards;
 }
 
 @keyframes overlay-grow {
@@ -198,21 +183,21 @@ body {
 }
 
 .settings-container {
-  z-index: 100;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: rgba(25, 29, 27, 0.9);
-  width: 200px;
-  height: 180px;
+  width: 50vw;
+  height: 25vh;
   color: var(--clr-secondary);
-  font-size: 1.25em;
+  font-size: 1em;
   display: flex;
   flex-direction: column;
   justify-content: center; /* horizontal */
   align-items: center; /* vertical */
   border-radius: 10px;
+  cursor: pointer;
 }
 
 .difficulty.selected {
@@ -226,34 +211,53 @@ body {
   padding: 1px 15px 1px 15px;
   font: inherit;
   color: inherit;
-  cursor: pointer;
   outline: inherit;
-  margin: 10px;
+  margin: 5px;
 }
 
-/* md 768px and up */
+@media (orientation: landscape) {
+  .cards {
+    grid-template-columns: repeat(10, 8vw);
+    grid-gap: 1vw;
+  }
+  .card-face > img {
+    height: 10vh;
+  }
+  .card-back > img {
+    height: 8vh;
+  }
+  .card {
+    height: 20vh;
+    width: 8vw;
+  }
+  .settings-container {
+    width: 35vw;
+    height: 40vh;
+  }
+}
+
+/* Medium devices (tablets, 768px and up) */
 @media (min-width: 768px) {
   .game-title {
-    font-size: 2.75em;
+    font-size: 2.25em;
   }
   .game-info {
     font-size: 2em;
   }
   .cards {
-    grid-template-columns: repeat(auto-fit, minmax(135px, auto));
-    grid-template-rows: repeat(auto-fit, minmax(185px, auto));
+    grid-template-columns: repeat(5, 16vw);
+    grid-gap: 1vw;
   }
 
   .card {
-    height: 175px;
-    width: 125px;
+    height: 18vh;
+    width: 16vw;
   }
-
   .card-face > img {
-    height: 100px;
+    height: 10vh;
   }
   .card-back > img {
-    height: 80px;
+    height: 8vh;
   }
   @keyframes overlay-grow {
     from {
@@ -266,8 +270,51 @@ body {
     }
   }
   .settings-container {
-    width: 400px;
-    height: 250px;
+    width: 40vw;
+    height: 25vh;
     font-size: 1.75em;
+  }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+  .settings-container {
+    width: 30vw;
+    height: 35vh;
+  }
+  .cards {
+    grid-template-columns: repeat(10, 8vw);
+    grid-gap: 1vw;
+  }
+  .card-face > img {
+    height: 10vh;
+  }
+  .card-back > img {
+    height: 8vh;
+  }
+  .card {
+    height: 18vh;
+    width: 8vw;
+  }
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-height: 1200px) {
+  .settings-container {
+    width: 30vw;
+    height: 20vh;
+  }
+  .cards {
+    grid-template-columns: repeat(6, 14vw);
+  }
+  .card-face > img {
+    height: 8vh;
+  }
+  .card-back > img {
+    height: 6vh;
+  }
+  .card {
+    height: 14vh;
+    width: 14vw;
   }
 }
