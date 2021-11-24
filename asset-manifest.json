@@ -1,17 +1,15 @@
 {
   "files": {
-    "main.css": "/memory-game/static/css/main.c1c8b774.chunk.css",
-    "main.js": "/memory-game/static/js/main.6925ef46.chunk.js",
-    "main.js.map": "/memory-game/static/js/main.6925ef46.chunk.js.map",
-    "runtime-main.js": "/memory-game/static/js/runtime-main.66d6f4b6.js",
-    "runtime-main.js.map": "/memory-game/static/js/runtime-main.66d6f4b6.js.map",
-    "static/js/2.586d22c3.chunk.js": "/memory-game/static/js/2.586d22c3.chunk.js",
-    "static/js/2.586d22c3.chunk.js.map": "/memory-game/static/js/2.586d22c3.chunk.js.map",
-    "static/js/3.e54cacfc.chunk.js": "/memory-game/static/js/3.e54cacfc.chunk.js",
-    "static/js/3.e54cacfc.chunk.js.map": "/memory-game/static/js/3.e54cacfc.chunk.js.map",
+    "main.css": "/memory-game/static/css/main.45f9191e.chunk.css",
+    "main.js": "/memory-game/static/js/main.b34213b8.chunk.js",
+    "main.js.map": "/memory-game/static/js/main.b34213b8.chunk.js.map",
+    "runtime-main.js": "/memory-game/static/js/runtime-main.c2a72957.js",
+    "runtime-main.js.map": "/memory-game/static/js/runtime-main.c2a72957.js.map",
+    "static/js/2.c4fcb431.chunk.js": "/memory-game/static/js/2.c4fcb431.chunk.js",
+    "static/js/2.c4fcb431.chunk.js.map": "/memory-game/static/js/2.c4fcb431.chunk.js.map",
     "index.html": "/memory-game/index.html",
-    "static/css/main.c1c8b774.chunk.css.map": "/memory-game/static/css/main.c1c8b774.chunk.css.map",
-    "static/js/2.586d22c3.chunk.js.LICENSE.txt": "/memory-game/static/js/2.586d22c3.chunk.js.LICENSE.txt",
+    "static/css/main.45f9191e.chunk.css.map": "/memory-game/static/css/main.45f9191e.chunk.css.map",
+    "static/js/2.c4fcb431.chunk.js.LICENSE.txt": "/memory-game/static/js/2.c4fcb431.chunk.js.LICENSE.txt",
     "static/media/andy.png": "/memory-game/static/media/andy.bf63d441.png",
     "static/media/bob.png": "/memory-game/static/media/bob.cbcd2c1f.png",
     "static/media/burger.png": "/memory-game/static/media/burger.449c66a1.png",
@@ -39,9 +37,9 @@
     "static/media/wine.png": "/memory-game/static/media/wine.d3cf8654.png"
   },
   "entrypoints": [
-    "static/js/runtime-main.66d6f4b6.js",
-    "static/js/2.586d22c3.chunk.js",
-    "static/css/main.c1c8b774.chunk.css",
-    "static/js/main.6925ef46.chunk.js"
+    "static/js/runtime-main.c2a72957.js",
+    "static/js/2.c4fcb431.chunk.js",
+    "static/css/main.45f9191e.chunk.css",
+    "static/js/main.b34213b8.chunk.js"
   ]
 }
