@@ -56,8 +56,8 @@ function Game() {
     }
 
     const calculateFinalScore = () => {
-        const finalScore = score + time - 5*(flips - matchedCards.length * 2) 
-        finalScore > 0 ? setScore(finalScore) : setScore(0)
+        const finalScore = score + time - 5*(flips - matchedCards.length * 2)
+        setScore(finalScore > 0 ? finalScore : 0)
 
         if (finalScore >= highScore) {
             localStorage.setItem(savedScores[difficulty], finalScore)
@@ -70,7 +70,7 @@ function Game() {
         const settingsArr = [{ cards: 20, time: 75,}, { cards: 30, time: 100,}, { cards: 40, time: 180,}];
         const selectedSettings = settingsArr[currentDifficulty];
 
-        cards.map(card => card.flipped = false)
+        // cards.map(card => card.flipped = false)
         setMatched([]);
         setFlips(0);
         setScore(0);
@@ -102,37 +102,6 @@ function Game() {
         return () => clearInterval(id);
         }, [start, settingsOpen] // if value changes rerender
     );
-    
-    // check if the selected cards match. flips them if they dont
-    // useEffect(() => {
-    //     const checkMatch = () => {
-    //         // if the ids do not match, flip both cards over
-    //         if (cards[firstCard].id !== cards[secondCard].id) {
-    //             setTimeout( () => {
-    //                 updateCards(firstCard)
-    //                 updateCards(secondCard)
-    //             }, 700)  
-    //         }
-    //         else {
-    //             sounds[3].play()
-    //             matchedCards.push(cards[firstCard].id)
-    //             setScore(prevScore => prevScore + 50)
-    //             if(matchedCards.length === cards.length/2) {
-    //                 handleGameReport(2);
-    //             } 
-    //         }
-    
-    //         // reset the cards
-    //         setTimeout( () => {
-    //             setFirstCard(null)
-    //             setSecondCard(null)
-    //         }, 700)
-    //     }
-
-    //     if(secondCard !== null){
-    //         checkMatch()
-    //     }
-    // }, [secondCard])
 
     const checkMatch = (secondCardIndex) => {
         // if the ids do not match, flip both cards over
